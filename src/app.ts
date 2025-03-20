@@ -26,9 +26,24 @@ app.use('/assets', express.static(process.env.assetsPath as string));
 for (const route of router) {
   app.use(route.getRouter())
 }
+//
+// **新增: 測試資料庫連線**
+async function testDatabaseConnection() {
+  try {
+    await DB.testConnection(); // 呼叫 Mariadb.ts 中的 testConnection()
+    logger.info('✅ 成功連接至資料庫！');
+  } catch (error) {
+    logger.error('❌ 資料庫連接失敗:', error);
+  }
+}
 
-server.listen(process.env.SVPORT, () => {
-  logger.info('listening on *:'+process.env.SVPORT);
+// 啟動伺服器，並測試資料庫連線
+server.listen(process.env.SVPORT, async () => {
+  logger.info('✅ 伺服器啟動於 Port:' + process.env.SVPORT);
+  await testDatabaseConnection(); // 測試資料庫連線
 });
+//server.listen(process.env.SVPORT, () => {
+  //logger.info('listening on *:'+process.env.SVPORT);
+//});
 
 

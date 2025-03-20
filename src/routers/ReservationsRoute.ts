@@ -8,7 +8,7 @@ export class ReservationsRoute extends Route{
 
     constructor(){
         super()
-        this.url = '/Reservations/'
+        this.url = '/api/Reservations/'
         this.setRoutes()
     }
 

@@ -30,6 +30,16 @@ export class Mariadb {
             }
         }
     }
+    //
+    public async testConnection() {
+        try {
+            const conn = await this.pool!.getConnection();
+            console.log("測試成功！資料庫連接正常。");
+            conn.release(); // 釋放連線
+        } catch (err) {
+            console.error(" 測試失敗，無法連接資料庫:", err);
+        }
+    }
     
 }
 
